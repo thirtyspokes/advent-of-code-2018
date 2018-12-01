@@ -1,4 +1,4 @@
-[My notes for solving this.](NOTES.MD)
+[My notes for solving this.](NOTES.md)
 
 Day 1: Chronal Calibration
 ==========================
