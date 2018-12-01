@@ -16,7 +16,11 @@ fn main() {
 
 fn calculate_frequency(input_file: &File) -> isize {
     let reader = BufReader::new(input_file);
-    reader.lines().fold(0, |sum, line| sum + line.unwrap().parse::<isize>().unwrap())
+
+    reader.lines()
+        .map(|line| line.unwrap())
+        .map(|change| change.parse::<isize>().unwrap())
+        .sum()
 }
 
 fn calculate_loop_frequency(input_file: &File) -> isize {
