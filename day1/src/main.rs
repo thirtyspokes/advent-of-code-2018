@@ -5,21 +5,22 @@ use std::fs::File;
 use std::collections::HashMap;
 
 fn main() {
-    let file = File::open("inputs/part-1.txt").expect("Couldn't open input!");
-    let result = calculate_frequency(&file);
+    let input = File::open("inputs/part-1.txt").expect("Couldn't open input!");
+    
+    let result = calculate_frequency(&input);
     println!("Part 1: {}", result);
 
-    let result = calculate_loop_frequency(&file);
+    let result = calculate_loop_frequency(&input);
     println!("Part 2: {}", result);
 }
 
-fn calculate_frequency(file: &File) -> isize {
-    let reader = BufReader::new(file);
+fn calculate_frequency(input_file: &File) -> isize {
+    let reader = BufReader::new(input_file);
     reader.lines().fold(0, |sum, line| sum + line.unwrap().parse::<isize>().unwrap())
 }
 
-fn calculate_loop_frequency(file: &File) -> isize {
-    let mut reader = BufReader::new(file);
+fn calculate_loop_frequency(input_file: &File) -> isize {
+    let mut reader = BufReader::new(input_file);
     let mut seen: HashMap<isize, bool> = HashMap::new();
     let mut frequency: isize = 0;
 
