@@ -24,13 +24,7 @@ fn calculate_frequency(reader: BufReader<File>) -> io::Result<i64> {
     let mut frequency = 0;
 
     for line in reader.lines() {
-        let (sign, amount) = parse_line(line?);
-
-        if sign == "-" {
-            frequency -= amount
-        } else {
-            frequency += amount
-        }
+        frequency += line?.parse::<i64>().unwrap();
     }
 
     Ok(frequency)
@@ -44,13 +38,7 @@ fn calculate_loop_frequency(file: File) -> io::Result<i64> {
     loop {
         reader.seek(SeekFrom::Start(0)).expect("Failed to reset");
         for line in reader.by_ref().lines() {
-            let (sign, amount) = parse_line(line?);
-            
-            if sign == "-" {
-                frequency -= amount
-            } else {
-                frequency += amount
-            }
+            frequency += line?.parse::<i64>().unwrap();
 
             if seen.contains_key(&frequency) {
                 return Ok(frequency);
@@ -59,11 +47,4 @@ fn calculate_loop_frequency(file: File) -> io::Result<i64> {
             }
         }
     }
-}
-
-fn parse_line(line: String) -> (String, i64) {
-    let sign = String::from(&line[0..1]);
-    let amount = &line[1..].parse::<i64>().unwrap();
-
-    (sign, *amount)
 }
