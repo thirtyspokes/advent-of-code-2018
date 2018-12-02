@@ -21,7 +21,7 @@ mod tests {
 }
 ```
 
-The `#[cfg(test)]` directive tells Rust that the code that follows is a bunch of tests to be run by the test runner.  Each individual test gets the `[#test]` directive.  Additionally, it seems that you group all your tests in a sub-module inside of the main code - you can actually call the module whatever you want so long as the `cfg` directive is there, but convention seems to be to call it `tests`.
+The `#[cfg(test)]` directive tells Rust that the code that follows is a bunch of tests to be run by the test runner.  Each individual test gets the `#[test]` directive.  Additionally, it seems that you group all your tests in a sub-module inside of the main code - you can actually call the module whatever you want so long as the `cfg` directive is there, but convention seems to be to call it `tests`.
 
 The `use super::*;` line is a neat one - our tests live inside of the greater module (main) that all of our other code is in as a sub-module.  Intuitively, it seems like it might make sense that sub-modules might have access to all of the code in their parent module, but they do not!  None of the functions in my solution are public (you make a function public by just putting `pub` in front of the `fn`) and so we need that `use super::*;` directive to say "give me access to everything in the parent module.
 
