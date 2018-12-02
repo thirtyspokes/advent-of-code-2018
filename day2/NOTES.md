@@ -31,7 +31,7 @@ Also, VSCode with the rust extensions seems to understand Rust well enough to gi
 
 Structs
 =======
-This is the first time I've used a struct in a solution, which are basically the same lightweight abstractions they are in Go.  I probably could have used just a tuple here, but I think it's useful to not have to remember that the first item in the tuple is one thing versus another thing since they both have the same type.
+This is the first time I've used a struct in a solution, which are basically the same lightweight abstractions they are in Go.  I probably could have used just a tuple here, but I think it's useful to be able to distinguish one item from another via the type system, versus having to remember that the first int in the tuple is one thing and the second int is a different thing.
 
 There's another reason to use a struct instead of a tuple here - one of the neat features of Rust that you'll hear about over and over again is "zero-cost abstractions".  In practice, this means that it doesn't "cost" anything in terms of performance or memory usage to use a higher-level abstraction in place of a low-level solution.  
 
