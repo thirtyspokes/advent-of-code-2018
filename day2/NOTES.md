@@ -14,7 +14,7 @@ mod tests {
     use super::*;
 
     // ... some tests
-    [#test]
+    #[test]
     fn a_test() {
         // test things
     }
