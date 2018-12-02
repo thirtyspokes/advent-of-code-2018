@@ -5,15 +5,13 @@ use std::collections::HashMap;
 
 fn main() {
     let input = File::open("inputs/part-1.txt").expect("Couldn't open input!");
+    println!("Part 1: {}", calculate_checksum(&input));
 
-    println!("Part 1: {}", calculate_checksum(input));
-
-    let input = File::open("inputs/part-1.txt").expect("Couldn't open input!");
-    let (first, second) = find_nearly_identical_ids(input);
+    let (first, second) = find_nearly_identical_ids(&input);
     println!("Part 2: {} and {}", first, second)
 }
 
-fn calculate_checksum(file: File) -> isize {
+fn calculate_checksum(file: &File) -> isize {
     let mut reader = BufReader::new(file);
     let mut twos = 0;
     let mut threes = 0;
@@ -28,7 +26,7 @@ fn calculate_checksum(file: File) -> isize {
     twos * threes
 }
 
-fn find_nearly_identical_ids(file: File) -> (String, String) {
+fn find_nearly_identical_ids(file: &File) -> (String, String) {
     let reader = BufReader::new(file);
 
     let lines: Vec<String> = reader.lines()
@@ -85,10 +83,8 @@ fn nearly_identical(a: String, b: String) -> bool {
         return false
     }
 
-    let b_vec: Vec<char> = b.chars().collect();
-
-    for (i, a_char) in a.chars().enumerate() {
-        if a_char != b_vec[i] {
+    for (a_char, b_char) in a.chars().zip(b.chars()) {
+        if a_char != b_char {
             if found_difference {
                 return false;
             } else {
@@ -103,6 +99,21 @@ fn nearly_identical(a: String, b: String) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_part_one() {
+        let input = File::open("inputs/part-1.txt").expect("Couldn't open input!");
+        assert_eq!(6422, calculate_checksum(&input));
+    }
+
+    #[test]
+    fn test_part_two() {
+        let input = File::open("inputs/part-1.txt").expect("Couldn't open input!");
+        assert_eq!(
+            ("qcslyvphgkrmddawljuefotxbh".to_string(), "qcslyvphgkrmrdawljuefotxbh".to_string()),
+            find_nearly_identical_ids(&input)
+        )
+    }
 
     #[test]
     fn test_nearly_identical() {
