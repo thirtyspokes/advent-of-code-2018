@@ -5,19 +5,23 @@ use std::collections::HashMap;
 
 fn main() {
     let input = File::open("inputs/part-1.txt").expect("Couldn't open input!");
-    println!("Part 1: {}", calculate_checksum(&input));
+    let reader = BufReader::new(&input);
+    let lines: Vec<String> = reader.lines()
+        .map(|line| line.unwrap())
+        .collect();
+    
+    println!("Part 1: {}", calculate_checksum(&lines));
 
-    let (first, second) = find_nearly_identical_ids(&input);
+    let (first, second) = find_nearly_identical_ids(&lines);
     println!("Part 2: {} and {}", first, second)
 }
 
-fn calculate_checksum(file: &File) -> isize {
-    let mut reader = BufReader::new(file);
+fn calculate_checksum(lines: &Vec<String>) -> isize {
     let mut twos = 0;
     let mut threes = 0;
 
-    for line in reader.by_ref().lines() {
-        let score = get_freq_score(line.unwrap());
+    for line in lines {
+        let score = get_freq_score(line.to_string());
 
         twos += score.has_two;
         threes += score.has_three;
@@ -26,13 +30,7 @@ fn calculate_checksum(file: &File) -> isize {
     twos * threes
 }
 
-fn find_nearly_identical_ids(file: &File) -> (String, String) {
-    let reader = BufReader::new(file);
-
-    let lines: Vec<String> = reader.lines()
-        .map(|line| line.unwrap())
-        .collect();
-
+fn find_nearly_identical_ids(lines: &Vec<String>) -> (String, String) {
     for (i, line) in lines.iter().enumerate() {
         for comparison in &lines[i..] {
             if nearly_identical(line.to_string(), comparison.to_string()) {
@@ -103,15 +101,23 @@ mod tests {
     #[test]
     fn test_part_one() {
         let input = File::open("inputs/part-1.txt").expect("Couldn't open input!");
-        assert_eq!(6422, calculate_checksum(&input));
+        let reader = BufReader::new(&input);
+        let lines: Vec<String> = reader.lines()
+            .map(|line| line.unwrap())
+            .collect();
+        assert_eq!(6422, calculate_checksum(&lines));
     }
 
     #[test]
     fn test_part_two() {
         let input = File::open("inputs/part-1.txt").expect("Couldn't open input!");
+        let reader = BufReader::new(&input);
+        let lines: Vec<String> = reader.lines()
+            .map(|line| line.unwrap())
+            .collect();
         assert_eq!(
             ("qcslyvphgkrmddawljuefotxbh".to_string(), "qcslyvphgkrmrdawljuefotxbh".to_string()),
-            find_nearly_identical_ids(&input)
+            find_nearly_identical_ids(&lines)
         )
     }
 
