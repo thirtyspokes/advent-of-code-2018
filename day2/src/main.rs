@@ -21,7 +21,7 @@ fn calculate_checksum(lines: &Vec<String>) -> isize {
     let mut threes = 0;
 
     for line in lines {
-        let score = get_freq_score(line.to_string());
+        let score = get_freq_score(line);
 
         twos += score.has_two;
         threes += score.has_three;
@@ -33,7 +33,7 @@ fn calculate_checksum(lines: &Vec<String>) -> isize {
 fn find_nearly_identical_ids(lines: &Vec<String>) -> (String, String) {
     for (i, line) in lines.iter().enumerate() {
         for comparison in &lines[i..] {
-            if nearly_identical(line.to_string(), comparison.to_string()) {
+            if nearly_identical(line, comparison) {
                 return (line.to_string(), comparison.to_string())
             }
         }
@@ -48,7 +48,7 @@ struct Score {
     has_three: isize,
 }
 
-fn get_freq_score(id: String) -> Score {
+fn get_freq_score(id: &str) -> Score {
     let mut counts: HashMap<char, isize> = HashMap::new();
     let mut score = Score { has_two: 0isize, has_three: 0isize };
 
@@ -67,7 +67,7 @@ fn get_freq_score(id: String) -> Score {
     score
 }
 
-fn nearly_identical(a: String, b: String) -> bool {
+fn nearly_identical(a: &str, b: &str) -> bool {
     let mut found_difference = false;
 
     // If the strings aren't the same length, 
@@ -125,27 +125,27 @@ mod tests {
     fn test_nearly_identical() {
         assert_eq!(
             true,
-            nearly_identical("fghij".to_string(), "fguij".to_string())
+            nearly_identical("fghij", "fguij")
         );
         assert_eq!(
             true,
-            nearly_identical("xghij".to_string(), "fghij".to_string())
+            nearly_identical("xghij", "fghij")
         );
         assert_eq!(
             true,
-            nearly_identical("fghij".to_string(), "fghix".to_string())
+            nearly_identical("fghij", "fghix")
         );
         assert_eq!(
             false,
-            nearly_identical("fghij".to_string(), "fghij".to_string())
+            nearly_identical("fghij", "fghij")
         );
         assert_eq!(
             false,
-            nearly_identical("fghix".to_string(), "fguij".to_string())
+            nearly_identical("fghix", "fguij")
         );
         assert_eq!(
             false,
-            nearly_identical("abcde".to_string(), "fguij".to_string())
+            nearly_identical("abcde", "fguij")
         );
     }
 
@@ -153,31 +153,31 @@ mod tests {
     fn test_get_freq_score() {
         assert_eq!(
             Score { has_two: 0, has_three: 0},
-            get_freq_score("abcdef".to_string())
+            get_freq_score("abcdef")
         );
         assert_eq!(
             Score { has_two: 1, has_three: 1},
-            get_freq_score("bababc".to_string())
+            get_freq_score("bababc")
         );
         assert_eq!(
             Score { has_two: 1, has_three: 0},
-            get_freq_score("abbcde".to_string())
+            get_freq_score("abbcde")
         );
         assert_eq!(
             Score { has_two: 0, has_three: 1},
-            get_freq_score("abcccd".to_string())
+            get_freq_score("abcccd")
         );
         assert_eq!(
             Score { has_two: 1, has_three: 0},
-            get_freq_score("aabcdd".to_string())
+            get_freq_score("aabcdd")
         );
         assert_eq!(
             Score { has_two: 1, has_three: 0},
-            get_freq_score("abcdee".to_string())
+            get_freq_score("abcdee")
         );
         assert_eq!(
             Score { has_two: 0, has_three: 1},
-            get_freq_score("ababab".to_string())
+            get_freq_score("ababab")
         );
     }
 }
