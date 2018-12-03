@@ -55,7 +55,7 @@ fn place_claims(claims: Vec<Claim>) -> HashMap<(isize, isize), Vec<isize>> {
     for claim in claims {
         // Start at the left side (0 + x)
         for i in claim.x..(claim.x + claim.width) {
-            // Move from the top down
+            // Move from the bottom of the swatch to the top
             let top = 1000 - claim.y;
             let bottom = top - claim.height;
 
