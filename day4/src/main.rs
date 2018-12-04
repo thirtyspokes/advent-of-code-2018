@@ -12,10 +12,8 @@ fn main() {
 
     let results = get_minutes_asleep_by_guard(entries);
 
-    // Part one
     let mut winner = "";
     let mut most_mins = 0;
-
     let mut most_common_min = 0;
     let mut most_common_count = 0;
     let mut part2_winner = "";
@@ -80,7 +78,7 @@ fn get_minutes_asleep_by_guard(records: Vec<&str>) -> HashMap<&str, Vec<isize>> 
                 // Woke up
                 let sleep_stop = &parts[1][3..5];
 
-                // if we haven't seen this guard init with a 
+                // if we haven't seen this guard, init with a 
                 // new vec
                 let mut zero_vec = vec![0isize; 60];
                 let mut minutes = results
